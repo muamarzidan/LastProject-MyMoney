@@ -1,8 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router";
 import SignIn from "./pages/AuthPages/SignIn";
 import SignUp from "./pages/AuthPages/SignUp";
-import TransactionIncomePage from "./pages/Dashboard/TransactionPages/income";
-import TransactionOutcomePage from "./pages/Dashboard/TransactionPages/outcome";
+import TransactionIncomePage from "./pages/Dashboard/TransactionPages/income/index";
+import TransactionCreateIncomePage from "./pages/Dashboard/TransactionPages/income/create";
+import TransactionEditIncomePage from "./pages/Dashboard/TransactionPages/income/update";
+import TransactionOutcomePage from "./pages/Dashboard/TransactionPages/outcome/index";
+import TransactionCreateOutcomePage from "./pages/Dashboard/TransactionPages/outcome/create";
+import TransactionEditOutcomePage from "./pages/Dashboard/TransactionPages/outcome/update";
 import CategoryPage from "./pages/Dashboard/CategoryPage";
 import StatisticPage from "./pages/Dashboard/StatisticPage";
 import NotFound from "./pages/OtherPage/NotFound";
@@ -35,7 +39,11 @@ export default function App() {
 
             {/* Transaction Pages */}
             <Route path="/transaction-income" element={<TransactionIncomePage />} />
+            <Route path="/transaction-income/create" element={<TransactionCreateIncomePage />} />
+            <Route path="/transaction-income/edit/:id" element={<TransactionEditIncomePage />} />
             <Route path="/transaction-outcome" element={<TransactionOutcomePage />} />
+            <Route path="/transaction-outcome/create" element={<TransactionCreateOutcomePage />} />
+            <Route path="/transaction-outcome/edit/:id" element={<TransactionEditOutcomePage />} />
 
             {/* Category Pages */}
             <Route path="/category" element={<CategoryPage />} />
