@@ -1,14 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "../../icons";
+import { EyeCloseIcon, EyeIcon } from "../../icons";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
-import Checkbox from "../form/input/Checkbox";
 import Button from "../ui/button/Button";
 
 export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
   return (
     <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto gap-5 sm:gap-10">
         <div>
@@ -63,7 +61,7 @@ export default function SignUpForm() {
                 </Button>
                 <div className="flex justify-center">
                   <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
-                    Don&apos;t have an account? {""}
+                    Already have an account?{" "}
                     <Link
                       to="/signin"
                       className="text-brand-500 hover:text-brand-600 dark:text-brand-400"
