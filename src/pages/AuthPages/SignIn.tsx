@@ -6,8 +6,15 @@ export default function SignIn() {
   return (
     <>
       <PageMeta
-        title="React.js SignIn Dashboard | TailAdmin - Next.js Admin Dashboard Template"
-        description="This is React.js SignIn Tables Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template"
+        title="MyMoney - Sign In"
+        description="My Money is a dashboard personal finance management application that helps you track your income and expenses, set budgets, and manage your finances effectively."
+        keywords="MyMoney, Sign In, Personal Finance, Dashboard"
+        author="MyMoney Team"
+        robots="index, follow"
+        ogTitle="MyMoney - Sign In"
+        ogDescription="My Money is a dashboard personal finance management application that helps you track your income and expenses, set budgets, and manage your finances effectively."
+        ogImage="/images/og-image.png"
+        ogUrl="https://mymoney.com/signin"
       />
       <AuthLayout>
         <SignInForm />

@@ -1,6 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router";
 import SignIn from "./pages/AuthPages/SignIn";
 import SignUp from "./pages/AuthPages/SignUp";
+import TransactionIncomePage from "./pages/Dashboard/TransactionPages/income";
+import TransactionOutcomePage from "./pages/Dashboard/TransactionPages/outcome";
+import CategoryPage from "./pages/Dashboard/CategoryPage";
+import StatisticPage from "./pages/Dashboard/StatisticPage";
 import NotFound from "./pages/OtherPage/NotFound";
 import UserProfiles from "./pages/UserProfiles";
 import Videos from "./pages/UiElements/Videos";
@@ -28,6 +32,17 @@ export default function App() {
           {/* Dashboard Layout */}
           <Route element={<AppLayout />}>
             <Route index path="/" element={<Home />} />
+
+            {/* Transaction Pages */}
+            <Route path="/transaction-income" element={<TransactionIncomePage />} />
+            <Route path="/transaction-outcome" element={<TransactionOutcomePage />} />
+
+            {/* Category Pages */}
+            <Route path="/category" element={<CategoryPage />} />
+            
+            {/* Statistic Pages */}
+            <Route path="/statistic" element={<StatisticPage />} />
+
 
             {/* Others Page */}
             <Route path="/profile" element={<UserProfiles />} />
