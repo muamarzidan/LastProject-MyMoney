@@ -17,7 +17,7 @@ export default function SignIn() {
         ogUrl="https://mymoney.com/signin"
       />
       <AuthLayout>
-        <SignInForm onToggleForm={() => {}} />
+        <SignInForm />
       </AuthLayout>
     </>
   );
