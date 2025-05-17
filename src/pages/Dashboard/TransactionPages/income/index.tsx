@@ -66,15 +66,18 @@ export default function TransactionIncomePage() {
                         name="search"
                         placeholder="Search by name..."
                         value=""
-                        onChange={() => { }}
+                        // onChange={() => { }}
                         className="w-1/2"
                         success={false}
                         error={false}
                         disabled={false}
                         step={1}
                     ></Input>
-                    <Link to="/transaction-income/create" className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-800">
-                        Tambah Transaksi
+
+                    <Link to="/transaction-income/create">
+                        <button className="bg-green-600 text-white rounded hover:bg-green-800 h-auto py-2 px-4 transition-all duration-200">
+                            Tambah Transaksi
+                        </button>
                     </Link>
                 </div>
             </div>

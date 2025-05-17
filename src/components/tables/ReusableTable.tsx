@@ -46,7 +46,7 @@ export default function ReusableTable({
                             {showActions && (
                                 <TableCell
                                     isHeader
-                                    className="px-4 py-2 font-medium text-start text-gray-600 text-sm"
+                                    className="px-4 py-2 font-medium text-start text-gray-600 text-sm max-w-[150px] w-100"
                                 >
                                     Aksi
                                 </TableCell>
@@ -62,7 +62,7 @@ export default function ReusableTable({
                                     </TableCell>
                                 ))}
                                 {showActions && (
-                                    <TableCell className="px-4 py-2 space-x-2 flex justify-end">
+                                    <TableCell className="px-4 py-2 flex justify-between max-w-[150px] w-100">
                                         <button
                                             onClick={() => onEdit?.(row)}
                                             className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-xs"
