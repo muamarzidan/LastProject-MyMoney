@@ -1,0 +1,54 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches: 
+      - '**'  # Trigger on all branches
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.11.0'
+    - name: Load variables
+      run: |
+        touch .env
+        echo PORT=${{ secrets.PORT }} >> .env
+        echo VITE_BE_API_URL=${{ secrets.VITE_BE_API_URL }} >> .env
+    - name: Install dependencies
+      run: npm install
+    - name: Build project
+      run: npm run build
+
+  deploy:
+    if: github.ref == 'refs/heads/main'  # Only run on main branch
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Deploy app
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        passphrase: ${{ secrets.SSH_PASSPHRASE }}
+        script: |
+          export NVM_DIR="/home/kanzen/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          nvm use 20
+
+          cd /home/kanzen/Tubes/FE
+          git reset --hard HEAD
+          git pull origin main --rebase
+          npm install
+          npm run build          
+          sudo systemctl reload nginx
