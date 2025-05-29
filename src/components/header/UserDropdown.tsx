@@ -1,17 +1,57 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
-import { Link } from "react-router";
+
+import { logout } from "../../resolver/auth";
+import { getUserData } from "../../resolver/user";
+
+
+type UserData = {
+  name?: string;
+  email?: string;
+  username?: string;
+};
 
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const getCurrentUserData = async () => {
+    setIsLoading(true);
+    try {
+      const data = await getUserData();
+      setUserData(data.data);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getCurrentUserData();
+  }, []);
+
+  const handleLogout = async () => {
+    setIsLoading(true);
+    try {
+      await logout();
+      window.location.href = "/signin";
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   function toggleDropdown() {
     setIsOpen(!isOpen);
-  }
+  };
 
   function closeDropdown() {
     setIsOpen(false);
-  }
+  };
+
   return (
     <div className="relative">
       <button
@@ -22,7 +62,7 @@ export default function UserDropdown() {
           <img src="/images/user/owner.jpg" alt="User" />
         </span>
 
-        <span className="block mr-1 font-medium text-theme-sm">Musharof</span>
+        <span className="block mr-1 font-medium text-theme-sm">{userData?.username}</span>
         <svg
           className={`stroke-gray-500 dark:stroke-gray-400 transition-transform duration-200 ${
             isOpen ? "rotate-180" : ""
@@ -50,14 +90,15 @@ export default function UserDropdown() {
       >
         <div>
           <span className="block font-medium text-gray-700 text-theme-sm dark:text-gray-400">
-            Musharof Chowdhury
+            {userData?.username}
           </span>
           <span className="mt-0.5 block text-theme-xs text-gray-500 dark:text-gray-400">
-            randomuser@pimjo.com
+            {userData?.name}
           </span>
         </div>
-        <Link
-          to="/signin"
+        <button
+          onClick={handleLogout}
+          type="button"
           className="flex items-center gap-3 px-3 py-2 mt-3 font-medium text-gray-700 rounded-lg group text-theme-sm hover:bg-red-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
         >
           <svg
@@ -75,8 +116,14 @@ export default function UserDropdown() {
               fill=""
             />
           </svg>
-          Sign out
-        </Link>
+          {
+            isLoading ? (
+              <span className="text-gray-500 dark:text-gray-400">Logging out...</span>
+            ) : (
+              <span className="text-gray-700 dark:text-gray-400">Logout</span>
+            )
+          }
+        </button>
       </Dropdown>
     </div>
   );

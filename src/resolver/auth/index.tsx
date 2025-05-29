@@ -6,50 +6,73 @@ interface LoginPayload {
     password: string;
 }
 
-interface LoginResponse {
-    status: number;
-    data: {
-        accessToken: string;
-    };
+interface RegisterPayload {
+    name: string;
+    username: string;
+    password: string;
 }
+
+/**
+ * Login user
+ * @param username Username pengguna
+ * @param password Password pengguna
+ * @returns Access token jika berhasil
+ */
 
 export const login = async (username: string, password: string): Promise<string> => {
     const payload: LoginPayload = { username, password };
     try {
-        const response: LoginResponse = await axiosRequest.post("auth/login", payload);
-        if (response.status === 200 && response.data) {
-            const { accessToken } = response.data;
-            localStorage.setItem("userAppToken", accessToken);
+        const response = await axiosRequest.post("/api/auth/login", payload);
+        const accessToken = response.data;
+        
+        if (response.status === 200 && accessToken) {
+            localStorage.setItem("app-token", accessToken);
             return accessToken;
         } else {
             throw new Error("Login failed");
         }
-    } catch (error) {    
-        throw error;
-    }
-};
-
-export const logout = async () => {
-    const accessToken = localStorage.getItem("userAppToken");
-    if (!accessToken) {
-        return;
-    }
-
-    try {
-        await axiosRequest.post("auth/logout", {}, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        });
-        localStorage.removeItem("userAppToken");
     } catch (error) {
         throw error;
     }
 };
 
-export const resetPasswordSendOTP = async (email: string) => {
+export const register = async (name: string, username: string, password: string): Promise<string> => {
+    const payload: RegisterPayload = { name, username, password };
     try {
-        const response = await axiosRequest.post("auth/reset-password/send-otp", { email });
+        const response = await axiosRequest.post("/api/auth/register", payload);
+        const accessToken = response.data;
+        
+        if (response.status === 200 && accessToken) {
+            localStorage.setItem("app-token", accessToken);
+            return accessToken;
+        } else {
+            throw new Error("Registration failed");
+        }
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const logout = async () => {
+    const accessToken = localStorage.getItem("app-token");
+    if (!accessToken) {
+        return;
+    }
+
+    try {
+        await axiosRequest.post("/api/auth/logout", {}, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+    } catch (error) {
+        console.error("Logout error:", error);
+    }
+};
+
+export const resetPasswordSendOTP = async (username: string) => {
+    try {
+        const response = await axiosRequest.post("/api/auth/reset-password/send-otp", { username });
         if (response.status === 200) {
             return response.data;
         } else {
@@ -60,9 +83,9 @@ export const resetPasswordSendOTP = async (email: string) => {
     }
 };
 
-export const resetPasswordVerifyOTP = async (email: string, otp: string) => {
+export const resetPasswordVerifyOTP = async (username: string, otp: string) => {
     try {
-        const response = await axiosRequest.post("auth/reset-password/verify-otp", { email, otp });
+        const response = await axiosRequest.post("/api/auth/reset-password/verify-otp", { username, otp });
         if (response.status === 200) {
             return response.data;
         } else {
@@ -74,7 +97,7 @@ export const resetPasswordVerifyOTP = async (email: string, otp: string) => {
 };
 
 export const getToken = () => {
-    return localStorage.getItem("userAppToken");
+    return localStorage.getItem("app-token");
 };
 
 export const isAuthenticated = () => {
