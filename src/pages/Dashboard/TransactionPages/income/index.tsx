@@ -15,7 +15,7 @@ const columns: TableColumn[] = [
         header: "Status",
         render: (row) => (
             <span
-                className={`px-2 py-1 text-xs rounded ${row.status === "Active"
+                className={`px-2 py-1 text-xs rounded-full ${row.status === "Active"
                         ? "bg-green-200 text-green-800"
                         : "bg-yellow-200 text-yellow-800"
                     }`}
@@ -39,7 +39,7 @@ const columns: TableColumn[] = [
 
 export default function TransactionIncomePage() {
     const navigate = useNavigate();
-    // const [search, setSearch] = useState("");
+    const [search, setSearch] = useState("");
     const [data, setData] = useState<any[]>([]);
 
     useEffect(() => {
@@ -64,9 +64,9 @@ export default function TransactionIncomePage() {
                         id="search"
                         type="text"
                         name="search"
-                        placeholder="Search by name..."
-                        value=""
-                        // onChange={() => { }}
+                        placeholder="Cari berdasarkan tipe..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
                         className="w-1/2"
                         success={false}
                         error={false}
@@ -75,7 +75,7 @@ export default function TransactionIncomePage() {
                     ></Input>
 
                     <Link to="/transaction-income/create">
-                        <button className="bg-green-600 text-white rounded hover:bg-green-800 h-auto py-2 px-4 transition-all duration-200">
+                        <button className="bg-green-600 text-white rounded-lg hover:bg-green-800 h-auto py-2 px-4 transition-all duration-200">
                             Tambah Transaksi
                         </button>
                     </Link>
@@ -86,7 +86,7 @@ export default function TransactionIncomePage() {
                 data={data}
                 columns={columns}
                 showActions
-                onEdit={(row) => navigate(`/transaction-income/${row.id}`)}
+                onEdit={(row) => navigate(`/transaction-income/edit/${row.id}`)}
                 onDelete={(row) => {
                     if (confirm(`Yakin hapus "${row.name}"?`)) {
                         setData((prev) => prev.filter((item) => item.id !== row.id));

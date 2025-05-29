@@ -11,13 +11,15 @@ const apiAppSettingsInstance = axios.create({
     baseURL: API_URL,
     headers: {
         "Content-Type": "application/json",
+        "Accept": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("app-token")}`,
     },
     timeout: 3000,
 });
 
 apiAppSettingsInstance.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem("userAppToken");
+        const token = localStorage.getItem("app-token");
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
