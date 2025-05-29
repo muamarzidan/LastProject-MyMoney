@@ -69,6 +69,12 @@ export default function CreateWalletPage() {
                             {isLoading ? "Creating..." : "Tambah"}
                         </button>
                     </div>
+
+                    {isError && (
+                        <div className="text-red-500">
+                            Gagal membuat wallet
+                        </div>
+                    )}
                 </form>
             </ComponentCard>
         </>

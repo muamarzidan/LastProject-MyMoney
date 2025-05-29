@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router";
+import { Routes, Route, Navigate } from "react-router";
 
 import { useAuth } from "./context/Auth";
 import { setUnauthorizedHandler } from "./utils/request";
