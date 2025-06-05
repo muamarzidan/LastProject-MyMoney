@@ -79,4 +79,4 @@ export default function CreateWalletPage() {
             </ComponentCard>
         </>
     );
-}
+};
