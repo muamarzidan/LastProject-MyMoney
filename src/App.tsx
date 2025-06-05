@@ -6,7 +6,7 @@ import { setUnauthorizedHandler } from "./utils/request";
 import SignIn from "./pages/AuthPages/SignIn";
 import SignUp from "./pages/AuthPages/SignUp";
 // Wallet page 
-import WalletPage from "./pages/Dashboard/WalletPage";
+import WalletPage from "./pages/Dashboard/WalletPage/index";
 import WalletCreatePage from "./pages/Dashboard/WalletPage/create";
 import WalletUpdatePage from "./pages/Dashboard/WalletPage/update";
 // Transaction pages
@@ -18,6 +18,8 @@ import TransactionCreateOutcomePage from "./pages/Dashboard/TransactionPages/out
 import TransactionEditOutcomePage from "./pages/Dashboard/TransactionPages/outcome/update";
 // Category page
 import CategoryPage from "./pages/Dashboard/CategoryPage";
+import CategoryCreatePage from "./pages/Dashboard/CategoryPage/create";
+import CategoryUpdatePage from "./pages/Dashboard/CategoryPage/update";
 // Statistic page
 import StatisticPage from "./pages/Dashboard/StatisticPage";
 // Other pages
@@ -77,7 +79,8 @@ export default function App() {
 
           {/* Category Pages */}
           <Route path="/category" element={<CategoryPage />} />
-          
+          <Route path="/category/create" element={<CategoryCreatePage />} />
+          <Route path="/category/edit/:id" element={<CategoryUpdatePage />} />
           {/* Statistic Pages */}
           <Route path="/statistic" element={<StatisticPage />} />
 

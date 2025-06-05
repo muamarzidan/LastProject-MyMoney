@@ -50,8 +50,8 @@ const navItems: NavItem[] = [
   },
   {
     icon: <CalenderIcon />,
-    name: "Invoice",
-    path: "/statistic",
+    name: "Kategori",
+    path: "/category",
   },
   {
     icon: <CalenderIcon />,

@@ -1,8 +1,98 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { getWallet } from "../../../resolver/wallet/index";
+import { getAllCategory, deleteCategory } from "../../../resolver/category/index";
+import ReusableTable, { TableColumn } from "../../../components/tables/ReusableTable";
+
+
+const columns: TableColumn[] = [
+    {
+        key: "name",
+        header: "Nama Kategori",
+    }
+];
 export default function CategoryPage() {
+    const [categoryData, setCategoryData] = useState<any[]>([]);
+    const [walletList, setWalletList] = useState<any[]>([]);
+    const [selectedWalletId, setSelectedWalletId] = useState<number | null>(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await getWallet();
+                setWalletList(res.data);
+            } catch (error) {
+                console.error("Failed to fetch wallets", error);
+            }
+        })();
+    }, []);
+
+    useEffect(() => {
+        if (selectedWalletId) fetchCategoryData(selectedWalletId);
+    }, [selectedWalletId]);
+
+    const fetchCategoryData = async (walletId: number) => {
+        try {
+            const response = await getAllCategory(walletId);
+            setCategoryData(response.data);
+        } catch (error) {
+            console.error("Failed to fetch category data:", error);
+        }
+    };
+
     return (
-        <div className="flex flex-col items-center justify-center w-full h-screen">
-            <h1 className="text-2xl font-bold">Category Pages</h1>
-            <p className="mt-4 text-gray-500">This is a placeholder for category pages.</p>
+        <div className="flex flex-col justify-start w-full h-screen gap-6">
+            <div className="flex flex-col gap-3">
+                <h1 className="text-2xl font-bold">Kategori</h1>
+
+                <div className="flex justify-between">
+                    <select
+                        className="border px-3 py-2 rounded"
+                        onChange={(e) => setSelectedWalletId(Number(e.target.value))}
+                        value={selectedWalletId ?? ""}
+                    >
+                        <option value="">-- Pilih Wallet --</option>
+                        {walletList.map((w) => (
+                            <option key={w.id} value={w.id}>
+                                {w.name}
+                            </option>
+                        ))}
+                    </select>
+
+                    <button
+                        className="bg-green-600 text-white px-4 py-2 rounded"
+                        onClick={() => navigate("/category/create")}
+                    >
+                        Tambah Kategori
+                    </button>
+                </div>
+
+                {selectedWalletId && (
+                    <ReusableTable
+                        data={categoryData}
+                        columns={columns}
+                        showActions
+                        onEdit={(row) => navigate(`/category/edit/${row.id}`)}
+                        onDelete={async (row) => {
+                            const confirmDelete = confirm(`Hapus kategori "${row.name}"?`);
+                            if (confirmDelete && selectedWalletId) {
+                                try {
+                                    await deleteCategory(row.id, selectedWalletId);
+                                    setCategoryData((prev) =>
+                                        prev.filter((item) => item.id !== row.id)
+                                    );
+                                    alert("Kategori berhasil dihapus");
+                                } catch (error) {
+                                    console.error("Gagal menghapus kategori:", error);
+                                    alert("Gagal menghapus kategori.");
+                                }
+                            }
+                        }}
+                    />
+                )}
+            </div>
         </div>
     );
-}
+};
