@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { getWallet } from "../../../resolver/wallet/index";
 import { getAllCategory, deleteCategory } from "../../../resolver/category/index";
 import ReusableTable, { TableColumn } from "../../../components/tables/ReusableTable";
+import Select from "../../../components/form/Select";
 
 
 const columns: TableColumn[] = [
@@ -16,7 +17,6 @@ export default function CategoryPage() {
     const [categoryData, setCategoryData] = useState<any[]>([]);
     const [walletList, setWalletList] = useState<any[]>([]);
     const [selectedWalletId, setSelectedWalletId] = useState<number | null>(null);
-    const navigate = useNavigate();
 
     useEffect(() => {
         (async () => {
@@ -48,25 +48,22 @@ export default function CategoryPage() {
                 <h1 className="text-2xl font-bold">Kategori</h1>
 
                 <div className="flex justify-between">
-                    <select
-                        className="border px-3 py-2 rounded"
-                        onChange={(e) => setSelectedWalletId(Number(e.target.value))}
-                        value={selectedWalletId ?? ""}
-                    >
-                        <option value="">-- Pilih Wallet --</option>
-                        {walletList.map((w) => (
-                            <option key={w.id} value={w.id}>
-                                {w.name}
-                            </option>
-                        ))}
-                    </select>
+                    <Select
+                        className="border px-2 py-2 rounded"
+                        options={walletList.map((w) => ({
+                            value: w.id.toString(),
+                            label: w.name,
+                        }))}
+                        placeholder="---- Pilih Wallet ---- "
+                        value={selectedWalletId?.toString() ?? ""}
+                        onChange={(val) => setSelectedWalletId(Number(val))}
+                    />
 
-                    <button
-                        className="bg-green-600 text-white px-4 py-2 rounded"
-                        onClick={() => navigate("/category/create")}
-                    >
-                        Tambah Kategori
-                    </button>
+                    <Link to="/category/create">
+                        <button className="bg-green-600 text-white rounded-lg hover:bg-green-800 h-auto py-2 px-4 transition-all duration-200">
+                            Tambah Kategori
+                        </button>
+                    </Link>
                 </div>
 
                 {selectedWalletId && (
@@ -74,7 +71,7 @@ export default function CategoryPage() {
                         data={categoryData}
                         columns={columns}
                         showActions
-                        onEdit={(row) => navigate(`/category/edit/${row.id}`)}
+                        showEdit={false}
                         onDelete={async (row) => {
                             const confirmDelete = confirm(`Hapus kategori "${row.name}"?`);
                             if (confirmDelete && selectedWalletId) {

@@ -35,6 +35,17 @@ export default function WalletPage() {
         fetchWalletData();
     }, []);
 
+    const [debouncedSearch, setDebouncedSearch] = useState(search);
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedSearch(search);
+        }, 500);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [search]);
+
     return (
         <div className="flex flex-col justify-start w-full h-screen gap-6">
             <div id="header-transaction-income" className="flex flex-col gap-3">
@@ -44,7 +55,7 @@ export default function WalletPage() {
                         id="search"
                         type="text"
                         name="search"
-                        placeholder="Cari berdasarkan tipe..."
+                        placeholder="Cari berdasarkan nama..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         className="w-1/2"
@@ -63,9 +74,12 @@ export default function WalletPage() {
             </div>
 
             <ReusableTable
-                data={walletData}
+                data={walletData.filter((item) =>
+                    item.name.toLowerCase().includes(debouncedSearch.toLowerCase())
+                )}
                 columns={columns}
                 showActions
+                showEdit
                 onEdit={(row) => navigate(`/wallet/edit/${row.id}`)}
                 onDelete={async (row) => {
                     const confirmDelete = confirm(`Yakin hapus wallet "${row.name}"?`);

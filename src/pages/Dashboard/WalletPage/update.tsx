@@ -10,6 +10,7 @@ export default function UpdateWalletPage() {
     const { id } = useParams<{ id: string }>();
     const [nameWallet, setNameWallet] = useState<string>("");
     const [balanceWallet, setBalanceWallet] = useState<number>(0);
+    const [currentBalance, setCurrentBalance] = useState<number>(0);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
     const navigate = useNavigate();
@@ -22,7 +23,8 @@ export default function UpdateWalletPage() {
                 const parsedId = parseInt(id);
                 const data = await getWalletById(parsedId);
                 setNameWallet(data.data.name);
-                setBalanceWallet(data.data.balance);
+                setCurrentBalance(data.data.balance);
+                // setBalanceWallet(data.data.balance);
             } catch (error) {
                 console.error("Failed to fetch wallet:", error);
                 setIsError(true);
@@ -71,7 +73,7 @@ export default function UpdateWalletPage() {
                         />
                     </div>
                     <div>
-                        <Label htmlFor="input">Nominal</Label>
+                        <Label htmlFor="input">Nominal tambahan</Label>
                         <Input
                             id="amount"
                             type="number"
@@ -79,17 +81,29 @@ export default function UpdateWalletPage() {
                             value={balanceWallet}
                             onChange={(e) => setBalanceWallet(Number(e.target.value))}
                         />
+                        <p className="text-sm text-gray-500 mt-1">
+                            Saldo saat ini: {currentBalance.toLocaleString()} (Silahkan tambahankan saldo baru diatas)
+                        </p>
                     </div>
 
                     <div className="mb-4 flex justify-end">
-                        <button
-                            disabled={isLoading || isError}
-                            onClick={handleUpdateWallet}
-                            type="submit"
-                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                        >
-                            {isLoading ? "Updating..." : "Update"}
-                        </button>
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => navigate("/wallet")}
+                                type="button"
+                                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+                            >
+                                Kembali
+                            </button>
+                            <button
+                                disabled={isLoading || isError}
+                                onClick={handleUpdateWallet}
+                                type="submit"
+                                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                            >
+                                {isLoading ? "Mengupdate..." : "Update"}
+                            </button>
+                        </div>
                     </div>
                     {isError && <p className="text-red-500">Gagal update data</p>}
                 </form>

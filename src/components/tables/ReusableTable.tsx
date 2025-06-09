@@ -19,6 +19,7 @@ interface Props {
     onEdit?: (row: any) => void;
     onDelete?: (row: any) => void;
     showActions?: boolean;
+    showEdit?: boolean;
 }
 
 export default function ReusableTable({
@@ -27,6 +28,7 @@ export default function ReusableTable({
     onEdit,
     onDelete,
     showActions = false,
+    showEdit = false
 }: Props) {
     return (
         <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
@@ -63,12 +65,14 @@ export default function ReusableTable({
                                 ))}
                                 {showActions && (
                                     <TableCell className="px-4 py-2 flex justify-between max-w-[150px] w-100">
-                                        <button
-                                            onClick={() => onEdit?.(row)}
-                                            className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-xs"
-                                        >
-                                            Edit
-                                        </button>
+                                        {showEdit && (
+                                            <button
+                                                onClick={() => onEdit?.(row)}
+                                                className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 text-xs"
+                                            >
+                                                Edit
+                                            </button>
+                                        )}
                                         <button
                                             onClick={() => onDelete?.(row)}
                                             className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 text-xs"

@@ -12,14 +12,11 @@ import WalletUpdatePage from "./pages/Dashboard/WalletPage/update";
 // Transaction pages
 import TransactionIncomePage from "./pages/Dashboard/TransactionPages/income/index";
 import TransactionCreateIncomePage from "./pages/Dashboard/TransactionPages/income/create";
-import TransactionEditIncomePage from "./pages/Dashboard/TransactionPages/income/update";
 import TransactionOutcomePage from "./pages/Dashboard/TransactionPages/outcome/index";
 import TransactionCreateOutcomePage from "./pages/Dashboard/TransactionPages/outcome/create";
-import TransactionEditOutcomePage from "./pages/Dashboard/TransactionPages/outcome/update";
 // Category page
 import CategoryPage from "./pages/Dashboard/CategoryPage";
 import CategoryCreatePage from "./pages/Dashboard/CategoryPage/create";
-import CategoryUpdatePage from "./pages/Dashboard/CategoryPage/update";
 // Statistic page
 import StatisticPage from "./pages/Dashboard/StatisticPage";
 // Other pages
@@ -72,15 +69,12 @@ export default function App() {
           {/* Transaction Pages */}
           <Route path="/transaction-income" element={<TransactionIncomePage />} />
           <Route path="/transaction-income/create" element={<TransactionCreateIncomePage />} />
-          <Route path="/transaction-income/edit/:id" element={<TransactionEditIncomePage />} />
           <Route path="/transaction-outcome" element={<TransactionOutcomePage />} />
           <Route path="/transaction-outcome/create" element={<TransactionCreateOutcomePage />} />
-          <Route path="/transaction-outcome/edit/:id" element={<TransactionEditOutcomePage />} />
 
           {/* Category Pages */}
           <Route path="/category" element={<CategoryPage />} />
           <Route path="/category/create" element={<CategoryCreatePage />} />
-          <Route path="/category/edit/:id" element={<CategoryUpdatePage />} />
           {/* Statistic Pages */}
           <Route path="/statistic" element={<StatisticPage />} />
 
