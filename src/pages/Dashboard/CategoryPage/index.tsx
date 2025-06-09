@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { getWallet } from "../../../resolver/wallet/index";
 import { getAllCategory, deleteCategory } from "../../../resolver/category/index";
@@ -17,7 +17,6 @@ export default function CategoryPage() {
     const [categoryData, setCategoryData] = useState<any[]>([]);
     const [walletList, setWalletList] = useState<any[]>([]);
     const [selectedWalletId, setSelectedWalletId] = useState<number | null>(null);
-    const navigate = useNavigate();
 
     useEffect(() => {
         (async () => {
