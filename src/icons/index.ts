@@ -107,5 +107,5 @@ export {
   MailIcon,
   HorizontaLDots,
   ChevronUpIcon,
-  ChatIcon,
+  ChatIcon
 };

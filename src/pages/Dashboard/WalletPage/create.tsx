@@ -62,12 +62,21 @@ export default function CreateWalletPage() {
                     </div>
 
                     <div className="mb-4 flex justify-end">
-                        <button
-                            type="submit"
-                            className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
-                        >
-                            {isLoading ? "Creating..." : "Tambah"}
-                        </button>
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => navigate("/wallet")}
+                                type="button"
+                                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+                            >
+                                Kembali
+                            </button>
+                            <button
+                                type="submit"
+                                className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                            >
+                                {isLoading ? "Menambahkan..." : "Tambah"}
+                            </button>
+                        </div>
                     </div>
 
                     {isError && (

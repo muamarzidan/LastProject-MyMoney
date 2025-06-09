@@ -13,6 +13,9 @@ import {
   PlugInIcon,
   TableIcon,
   UserCircleIcon,
+  FolderIcon,
+  DollarLineIcon,
+  ShootingStarIcon
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
 import { getWallet } from "../resolver/wallet";
@@ -24,6 +27,7 @@ type NavItem = {
   path?: string;
   subItems?: { name: string; path: string; pro?: boolean; new?: boolean }[];
 };
+
 const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
@@ -31,12 +35,12 @@ const navItems: NavItem[] = [
     path: "/",
   },
   {
-    icon: <GridIcon />,
+    icon: <FolderIcon />,
     name: "Wallet",
     path: "/wallet",
   },
   {
-    icon: <GridIcon />,
+    icon: <DollarLineIcon />,
     name: "Transaksi",
     subItems: [
       { name: "Income", path: "/transaction-income", pro: false },
@@ -44,14 +48,14 @@ const navItems: NavItem[] = [
     ],
   },
   {
-    icon: <CalenderIcon />,
-    name: "Statistik",
-    path: "/statistic",
-  },
-  {
-    icon: <CalenderIcon />,
+    icon: <TableIcon />,
     name: "Kategori",
     path: "/category",
+  },
+  {
+    icon: <ShootingStarIcon />,
+    name: "Statistik",
+    path: "/statistic",
   },
   {
     icon: <CalenderIcon />,
@@ -82,6 +86,7 @@ const navItems: NavItem[] = [
     ],
   },
 ];
+
 const othersItems: NavItem[] = [
   {
     icon: <PieChartIcon />,
@@ -112,6 +117,7 @@ const othersItems: NavItem[] = [
     ],
   },
 ];
+
 const AppSidebar: React.FC = () => {
   const location = useLocation();
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
@@ -139,9 +145,11 @@ const AppSidebar: React.FC = () => {
     type: "main" | "others";
     index: number;
   } | null>(null);
+
   const [subMenuHeight, setSubMenuHeight] = useState<Record<string, number>>(
     {}
   );
+
   const subMenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const isActive = useCallback(

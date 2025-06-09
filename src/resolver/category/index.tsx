@@ -17,11 +17,9 @@ export const getCategoryById = async (
     walletId: number
 ): Promise<any> => {
     try {
-        console.log("Fetching category with ID:", categoryId, "for wallet ID:", walletId);
         const response = await axiosRequest.get(`/api/wallets/categories/${categoryId}`, {
             params: { walletId },
         });
-        console.log("Category fetched successfully:", response.data);
         return response.data;
     } catch (error) {
         throw error;
