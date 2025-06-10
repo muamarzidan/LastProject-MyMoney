@@ -232,7 +232,7 @@ const AppSidebar: React.FC = () => {
                 <li>
                   <Link to="/wallet" className={`menu-item group ${cekPath === "/wallet" ? "menu-item-active" : "menu-item-inactive"}`}>
                     <span className="menu-item-icon-size menu-item-icon-active">
-                      <GridIcon />
+                      <FolderIcon />
                     </span>
                     {(isExpanded || isHovered || isMobileOpen) && (
                       <span className="menu-item-text">Wallet </span>
