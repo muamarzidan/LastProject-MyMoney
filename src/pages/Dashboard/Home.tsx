@@ -49,7 +49,13 @@ export default function Home() {
     )
   };
 
-  console.log("User data:", user);
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-lg text-red-500">Terjadi kesalahan saat memuat data, mohon coba lagi</div>
+      </div>
+    );
+  }
 
   return (
     <>
