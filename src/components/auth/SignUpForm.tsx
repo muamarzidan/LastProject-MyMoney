@@ -49,6 +49,7 @@ export default function SignUpForm() {
       setFormErrors({});
       setIsLoading(true);
       const response = await register(name, username, password);
+      console.log("Register response:", response);
       if (response) {
         loginSuccess();
         navigate("/", { replace: true });

@@ -7,4 +7,4 @@ export const getUserData = async (): Promise<any> => {
     } catch (error) {
         throw error;
     }
-}
+};

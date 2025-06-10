@@ -35,7 +35,6 @@ interface Transaction {
     id: number;
     amount: number;
     date: string;
-    description: string;
     transactionType: string;
     source: string;
     category: string;
@@ -70,6 +69,15 @@ const columns: TableColumn[] = [
         render: (row) => formatCurrency(row.value),
     },
     {
+        key: "date",
+        header: "Tanggal",
+        render: (row) => new Date(row.date).toLocaleDateString('id-ID', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        }),
+    },
+        {
         key: "transactionType",
         header: "Tipe Transaksi",
         render: (row) => (
@@ -81,19 +89,6 @@ const columns: TableColumn[] = [
                 {row.transactionType === 'INCOME' ? 'Income' : 'Outcome'}
             </span>
         ),
-    },
-    {
-        key: "date",
-        header: "Tanggal",
-        render: (row) => new Date(row.date).toLocaleDateString('id-ID', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric'
-        }),
-    },
-    {
-        key: "description",
-        header: "Deskripsi",
     }
 ];
 
@@ -373,7 +368,7 @@ export default function StatisticPage() {
                         </div>
                     </div>
 
-                    <div className="w-full">
+                    <div className="w-full mb-6">
                         <div className="p-6 bg-white rounded-xl shadow-lg">
                             <div className="flex justify-between items-center mb-6">
                                 <h2 className="text-lg font-semibold text-gray-700">Riwayat Transaksi</h2>
