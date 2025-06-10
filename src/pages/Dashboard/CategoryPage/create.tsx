@@ -8,6 +8,7 @@ import Input from "../../../components/form/input/InputField";
 import Label from "../../../components/form/Label";
 import Select from "../../../components/form/Select";
 
+
 interface ValidationErrors {
     selectedWalletId?: string;
     nameCategory?: string;

@@ -13,6 +13,7 @@ const columns: TableColumn[] = [
         header: "Nama Kategori",
     }
 ];
+
 export default function CategoryPage() {
     const [categoryData, setCategoryData] = useState<any[]>([]);
     const [walletList, setWalletList] = useState<any[]>([]);
