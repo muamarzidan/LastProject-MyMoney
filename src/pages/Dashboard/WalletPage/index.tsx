@@ -17,6 +17,7 @@ const columns: TableColumn[] = [
         render: (row) => `Rp ${row.balance.toLocaleString("id-ID")}`,
     },
 ];
+
 export default function WalletPage() {
     const [walletData, setWalletData] = useState<any[]>([]);
     const navigate = useNavigate();
