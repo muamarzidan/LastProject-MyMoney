@@ -49,7 +49,7 @@ export default function CategoryPage() {
 
                 <div className="flex justify-between">
                     <Select
-                        className="border px-2 py-2 rounded"
+                        className="w-fit"
                         options={walletList.map((w) => ({
                             value: w.id.toString(),
                             label: w.name,
