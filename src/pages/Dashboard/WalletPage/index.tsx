@@ -16,6 +16,11 @@ const columns: TableColumn[] = [
         header: "Saldo",
         render: (row) => `Rp ${row.balance.toLocaleString("id-ID")}`,
     },
+    {
+        key: "myMoney",
+        header: "Saldo Sekarang",
+        render: (row) => `Rp ${row.myMoney.toLocaleString("id-ID")}`,
+    },
 ];
 
 export default function WalletPage() {
