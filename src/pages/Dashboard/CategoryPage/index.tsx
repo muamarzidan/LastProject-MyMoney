@@ -46,11 +46,10 @@ export default function CategoryPage() {
     return (
         <div className="flex flex-col justify-start w-full h-screen gap-6">
             <div className="flex flex-col gap-3">
-                <h1 className="text-2xl font-bold">Kategori</h1>
-
-                <div className="flex justify-between">
+                <h1 className="text-2xl font-bold mb-3 sm:mb-0">Kategori</h1>
+                <div className="flex flex-col sm:flex-row justify-between gap-2 sm:gap-0">
                     <Select
-                        className="w-fit"
+                        className="w-full sm:w-fit"
                         options={walletList.map((w) => ({
                             value: w.id.toString(),
                             label: w.name,
@@ -61,7 +60,7 @@ export default function CategoryPage() {
                     />
 
                     <Link to="/category/create">
-                        <button className="bg-blue-600 text-white rounded-lg hover:bg-blue-800 h-auto py-2 px-4 transition-all duration-200">
+                        <button className="bg-blue-600 text-white rounded-lg hover:bg-blue-800 h-auto py-2 px-4 transition-all duration-200 sm:w-fit w-full">
                             Tambah Kategori
                         </button>
                     </Link>

@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 
 import { getWallet } from "../../../../resolver/wallet/index";
 import { deleteTransactionById } from "../../../../resolver/transaction/index";
-import Input from "../../../../components/form/input/InputField";
-import Select from "../../../../components/form/Select";
+import { getAllExpense } from "../../../../resolver/transaction/expanse";
 import ReusableTable, {
     TableColumn,
 } from "../../../../components/tables/ReusableTable";
-import { getAllExpense } from "../../../../resolver/transaction/expanse";
+import Input from "../../../../components/form/input/InputField";
+import Select from "../../../../components/form/Select";
+
 
 const columns: TableColumn[] = [
     { key: "destination", header: "Destinasi" },
@@ -54,11 +55,7 @@ export default function TransactionOutcomePage() {
             console.error("Failed to fetch transaction income", error);
         }
     };
-
     
-
-    
-
     const [debouncedSearch, setDebouncedSearch] = useState(search);
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -69,12 +66,13 @@ export default function TransactionOutcomePage() {
             clearTimeout(handler);
         };
     }, [search]);
+    
     return (
         <div className="flex flex-col justify-start w-full h-screen gap-6">
             <div id="header-transaction-outcome" className="flex flex-col gap-3">
-                <h1 className="text-2xl font-bold">Transaction Outcome</h1>
-                <div className="flex justify-between">
-                    <div className="flex w-fit gap-4">
+                <h1 className="text-2xl font-bold mb-3 sm:mb-0">Transaction Outcome</h1>
+                <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-0">
+                    <div className="flex w-full sm:w-fit gap-4">
                         <Select 
                             className="w-fit" 
                             options={walletList.map((w) => ({
@@ -96,7 +94,7 @@ export default function TransactionOutcomePage() {
                         />
                     </div>
                     <Link to="/transaction-outcome/create">
-                            <button className="bg-blue-600 text-white rounded-lg hover:bg-blue-800 h-auto py-2 px-4 transition-all duration-200">
+                            <button className="bg-blue-600 text-white rounded-lg hover:bg-blue-800 h-auto py-2 px-4 transition-all duration-200 w-full sm:w-fit">
                                 Tambah Transaksi
                             </button>
                     </Link>

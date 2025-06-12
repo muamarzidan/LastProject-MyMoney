@@ -56,7 +56,7 @@ export default function WalletPage() {
         <div className="flex flex-col justify-start w-full h-screen gap-6">
             <div id="header-transaction-income" className="flex flex-col gap-3">
                 <h1 className="text-2xl font-bold">Wallet</h1>
-                <div className="flex justify-between">
+                <div className="flex flex-col sm:flex-row justify-between gap-2 sm:gap-0">
                     <Input
                         id="search"
                         type="text"
@@ -72,7 +72,7 @@ export default function WalletPage() {
                     ></Input>
 
                     <Link to="/wallet/create">
-                        <button className="bg-blue-600 text-white rounded-lg hover:bg-blue-800 h-auto py-2 px-4 transition-all duration-200">
+                        <button className="bg-blue-600 text-white rounded-lg hover:bg-blue-800 h-auto py-2 px-4 transition-all duration-200 sm:w-fit w-full">
                             Tambah Wallet
                         </button>
                     </Link>
