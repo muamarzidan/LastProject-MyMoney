@@ -116,16 +116,16 @@ export default function Home() {
       const maxValue = Math.max(incomeData, outcomeData);
 
       let gridLeft = '5%';
-      if (maxValue >= 1_000_000_000) {
+      if (maxValue >= 1_000_000_000_000) {
+        gridLeft = '25%';
+      } else if (maxValue >= 1_000_000_000) {
         gridLeft = '20%';
       } else if (maxValue >= 1_000_000) {
         gridLeft = '15%';
       } else if (maxValue >= 1_000) {
         gridLeft = '10%';
-      } else {
-        gridLeft = '30%';
       }
-
+      
       const option = {
         title: {
           text: 'Tipe Transaksi',
@@ -233,7 +233,6 @@ export default function Home() {
 
       chart.setOption(option);
 
-      // Cleanup
       return () => {
         chart.dispose();
       };
