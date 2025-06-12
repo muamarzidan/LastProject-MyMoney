@@ -228,7 +228,7 @@ export default function Home() {
             }
           }
         ],
-        color: ['#06B6D4', '#06B6D4', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899']
+        color: ['#06B6D4', '#0C0707', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899']
       };
 
       chart.setOption(option);
@@ -333,74 +333,75 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="col-span-12 mt-2">
+        <div className="col-span-12">
           <h2 className="text-2xl font-bold mb-2">Available Wallet</h2>
-          {
-            walletData?.data?.length > 0 ? (
-              walletData.data.map((wallet: any, index: any) => {
-                const bgWaletColor = getRandomCalmColor(index);
-                return (
-                  <div key={wallet.id} className="col-span-12 md:col-span-6 h-[300px] rounded-lg" style={{ backgroundColor: bgWaletColor }}>
-                    <div className="p-4 flex flex-col items-center justify-between h-full text-white">
-                      <div className="flex justify-between w-full h-fit">
-                        <div className="flex w-fit gap-2">
-                          <FaWallet className="text-2xl" />
-                          <strong>{wallet.name}</strong>
-                        </div>
-                        <div className="relative popover-container">
-                          <FaEllipsisVertical
-                            className="text-2xl cursor-pointer"
-                            onClick={() =>
-                              setActivePopoverId(activePopoverId === wallet.id ? null : wallet.id)
-                            }
-                          />
-                          {activePopoverId === wallet.id && (
-                            <div className="absolute right-0 mt-2 w-32 bg-white text-black rounded shadow-lg z-10">
-                              <button
-                                className="w-full px-4 py-2 text-left hover:bg-blue-100 rounded"
-                                onClick={() => {
-                                  navigate(`/wallet/edit/${wallet.id}`);
-                                }}
-                              >
-                                Update
-                              </button>
-                              <button
-                                className="w-full px-4 py-2 text-left hover:bg-red-100 text-red-600 rounded"
-                                onClick={async () => {
-                                  const confirmDelete = window.confirm(`Apakah Anda yakin ingin menghapus wallet ${wallet.name} ?`);
-                                  if (confirmDelete) {
-                                    await deleteWallet(wallet.id);
-                                    alert("Wallet berhasil dihapus.");
-                                    navigate("/", { replace: true });
-                                    window.location.reload();
-                                  }
-                                }}
-                              >
-                                Hapus
-                              </button>
-                            </div>
-                          )}
-                        </div>
+        </div>
+
+        {
+          walletData?.data?.length > 0 ? (
+            walletData.data.map((wallet: any, index: any) => {
+              const bgWaletColor = getRandomCalmColor(index);
+              return (
+                <div key={wallet.id} className="col-span-12 md:col-span-6 h-[350px] rounded-lg" style={{ backgroundColor: bgWaletColor }}>
+                  <div className="p-4 flex flex-col items-center justify-between h-full text-white">
+                    <div className="flex justify-between w-full h-fit">
+                      <div className="flex w-fit gap-2">
+                        <FaWallet className="text-2xl" />
+                        <strong>{wallet.name}</strong>
                       </div>
-                      <div className="w-full flex justify-between">
-                        <div className="flex flex-col gap-2">
-                          <p>Saldo Sekarang</p>
-                          <strong>{formatCurrency(wallet.myMoney)}</strong>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                          <p>Saldo Awal</p>
-                          <strong>{formatCurrency(wallet.balance)}</strong>
-                        </div>
+                      <div className="relative popover-container">
+                        <FaEllipsisVertical
+                          className="text-2xl cursor-pointer"
+                          onClick={() =>
+                            setActivePopoverId(activePopoverId === wallet.id ? null : wallet.id)
+                          }
+                        />
+                        {activePopoverId === wallet.id && (
+                          <div className="absolute right-0 mt-2 w-32 bg-white text-black rounded shadow-lg z-10">
+                            <button
+                              className="w-full px-4 py-2 text-left hover:bg-blue-100 rounded"
+                              onClick={() => {
+                                navigate(`/wallet/edit/${wallet.id}`);
+                              }}
+                            >
+                              Update
+                            </button>
+                            <button
+                              className="w-full px-4 py-2 text-left hover:bg-red-100 text-red-600 rounded"
+                              onClick={async () => {
+                                const confirmDelete = window.confirm(`Apakah Anda yakin ingin menghapus wallet ${wallet.name} ?`);
+                                if (confirmDelete) {
+                                  await deleteWallet(wallet.id);
+                                  alert("Wallet berhasil dihapus.");
+                                  navigate("/", { replace: true });
+                                  window.location.reload();
+                                }
+                              }}
+                            >
+                              Hapus
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="w-full flex justify-between">
+                      <div className="flex flex-col gap-2">
+                        <p>Saldo Sekarang</p>
+                        <strong>{formatCurrency(wallet.myMoney)}</strong>
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <p>Saldo Awal</p>
+                        <strong>{formatCurrency(wallet.balance)}</strong>
                       </div>
                     </div>
                   </div>
-                )
-              })
-            ) : (
-              <p className="text-gray-500">Tidak ada wallet yang tersedia.</p>
-            )
-          }
-        </div>
+                </div>
+              )
+            })
+          ) : (
+            <p className="text-gray-500">Tidak ada wallet yang tersedia.</p>
+          )
+        }
         </div>
     </>
   );
