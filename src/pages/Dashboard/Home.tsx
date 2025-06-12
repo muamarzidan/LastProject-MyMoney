@@ -115,7 +115,7 @@ export default function Home() {
 
       const maxValue = Math.max(incomeData, outcomeData);
 
-      let gridLeft = '5%';
+      let gridLeft = '7%';
       if (maxValue >= 1_000_000_000_000) {
         gridLeft = '25%';
       } else if (maxValue >= 1_000_000_000) {
@@ -125,7 +125,7 @@ export default function Home() {
       } else if (maxValue >= 1_000) {
         gridLeft = '10%';
       }
-      
+
       const option = {
         title: {
           text: 'Tipe Transaksi',
