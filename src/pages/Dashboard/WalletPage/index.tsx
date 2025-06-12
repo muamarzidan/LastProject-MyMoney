@@ -72,7 +72,7 @@ export default function WalletPage() {
                     ></Input>
 
                     <Link to="/wallet/create">
-                        <button className="bg-green-600 text-white rounded-lg hover:bg-green-800 h-auto py-2 px-4 transition-all duration-200">
+                        <button className="bg-blue-600 text-white rounded-lg hover:bg-blue-800 h-auto py-2 px-4 transition-all duration-200">
                             Tambah Wallet
                         </button>
                     </Link>

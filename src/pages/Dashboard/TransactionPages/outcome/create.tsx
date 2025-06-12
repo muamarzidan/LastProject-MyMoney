@@ -100,7 +100,7 @@ export default function CreateTransactionOutcomePage () {
 
       const selectedWalletData = wallets.find(w => w.id === Number(selectedWallet));
       const MyMoney = selectedWalletData?.myMoney;
-      console.log(MyMoney);
+
       if (MyMoney === undefined || MyMoney === null) {
         newErr.amount = "Saldo kamu saat ini tidak mencukupi"
       } else if (numericAmount > MyMoney) {
