@@ -113,18 +113,19 @@ export default function Home() {
       const incomeData = dashboardData.allTransactionByType.find(item => item.type === 'income')?.amount || 0;
       const outcomeData = dashboardData.allTransactionByType.find(item => item.type === 'outcome')?.amount || 0;
 
-      const maxValue = Math.max(incomeData, outcomeData);
+      const formatRupiahFilter = (value: number) => {
+        const newValue = Number(value);
 
-      let gridLeft = '7%';
-      if (maxValue >= 1_000_000_000_000) {
-        gridLeft = '25%';
-      } else if (maxValue >= 1_000_000_000) {
-        gridLeft = '20%';
-      } else if (maxValue >= 1_000_000) {
-        gridLeft = '15%';
-      } else if (maxValue >= 1_000) {
-        gridLeft = '10%';
-      }
+        if (newValue >= 1_000_000_000) {
+            return (newValue / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'b';
+        } else if (newValue >= 1_000_000) {
+            return (newValue / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'm';
+        } else if (newValue >= 1_000) {
+            return (newValue / 1_000).toFixed(1).replace(/\.0$/, '') + 'k';
+        } else {
+            return newValue.toString();
+        }
+    }
 
       const option = {
         title: {
@@ -151,7 +152,7 @@ export default function Home() {
           type: 'value',
           axisLabel: {
             formatter: function (value: number) {
-              return formatCurrency(value);
+              return formatRupiahFilter(value);
             }
           }
         },
@@ -170,7 +171,7 @@ export default function Home() {
           }
         ],
         grid: {
-          left: gridLeft,
+          left: "10%",
           right: '10%',
           bottom: '10%',
           top: '20%'
@@ -304,10 +305,10 @@ export default function Home() {
       />
       <div className="grid grid-cols-12 gap-4 md:gap-6">
         <div className="w-full col-span-12 h-[200px] bg-[url('/images/bg_wallet.svg')] bg-cover bg-center rounded-lg shadow-md flex flex-col justify-between p-5">
-          <h1 className="text-white text-2xl">Halo, selamat pagi {user?.data?.username}</h1>
+          <h1 className="text-white text-xl sm:text-2xl">Halo, selamat pagi {user?.data?.username}</h1>
           <div className="flex gap-2 items-center">
             <Select
-              className="w-fit !text-lg backdrop-blur-sm !text-white focus:border-gray-200 sm:py-1"
+              className="w-fit !text-md !sm:text-lg backdrop-blur-sm !text-white focus:border-gray-200 sm:py-1"
               options={walletData?.data?.map((wallet: any) => ({
                 value: wallet.id.toString(),
                 label: wallet.name,
@@ -316,7 +317,7 @@ export default function Home() {
               value={selectedWalletId?.toString() ?? ""}
               onChange={(val) => setSelectedWalletId(Number(val))}
             />
-            <p className="text-xl text-white">Saldo sekarang : {formatCurrency(currentBalance)}</p>
+            <p className="text-md sm:text-xl text-white">Saldo sekarang : {formatCurrency(currentBalance)}</p>
           </div>
         </div>
 

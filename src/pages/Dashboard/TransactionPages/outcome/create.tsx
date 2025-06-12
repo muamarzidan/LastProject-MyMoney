@@ -3,14 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 import { getAllCategory } from "../../../../resolver/category/index";
 import { getWallet} from "../../../../resolver/wallet/index"; 
+import { createExpense } from "../../../../resolver/transaction/expanse";
 import ComponentCard from "../../../../components/common/ComponentCard";
 import DatePicker from "../../../../components/form/date-picker";
 import Input from "../../../../components/form/input/InputField";
 import TextArea from "../../../../components/form/input/TextArea";
 import Label from "../../../../components/form/Label";
 import Select from "../../../../components/form/Select";
-
-import { createExpense } from "../../../../resolver/transaction/expanse";
 
 interface ValidationErrors {
   selectedWallet?: string;
@@ -136,7 +135,6 @@ export default function CreateTransactionOutcomePage () {
 
     try {
       const selectedCategoryData = categories.find(c => c.value === selectedCategory);
-
       
       const payload = {
         wallet: {id: Number(selectedWallet)},
