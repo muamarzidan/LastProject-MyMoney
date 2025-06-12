@@ -72,7 +72,7 @@ export default function CreateTransactionIncomePage() {
       console.error("Gagal mengambil kategori:", err);
       setCategories([]);
     }
-  };
+  };  
 
   const validateForm = (): boolean => {
     const newErrors: ValidationErrors = {};

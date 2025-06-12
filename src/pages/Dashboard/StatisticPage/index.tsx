@@ -1,17 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 import * as echarts from 'echarts';
+import axios from "axios";
 
 import { getWallet } from "../../../resolver/wallet/index";
 import axiosRequest from "../../../utils/request";
 import Select from "../../../components/form/Select";
 import ReusableTable, { TableColumn } from "../../../components/tables/ReusableTable";
+const API_URL = import.meta.env.VITE_BE_API_URL;
 
 
 interface Wallet {
     id: number;
     name: string;
 }
-
 interface TransactionByType {
     type: string;
     amount: number;
@@ -282,8 +283,29 @@ export default function StatisticPage() {
         }
     }, [statisticsData]);
 
-    const handlePrint = () => {
-        window.print();
+    const getToken = localStorage.getItem("app-token");
+    const handlePrintExcel = async (walletId: number, isYear: boolean) => {
+        try {
+            const response = await axios.get(
+            `${API_URL}/api/wallets/export-excel/${walletId}?isYear=${isYear}`,
+            {
+                responseType: 'blob',
+                headers: {
+                    Authorization: `Bearer ${getToken}`,
+                },
+            }
+            );
+
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'transactions.xlsx');
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        } catch (error) {
+            console.error("Gagal download file:", error);
+        }
     };
 
     const walletOptions = wallets.map(wallet => ({
@@ -295,6 +317,13 @@ export default function StatisticPage() {
         { value: "monthly", label: "Bulanan" },
         { value: "yearly", label: "Tahunan" },
     ];
+
+    const changeValueBool = (value: string) => {
+        if (value === "yearly") {
+            return true;
+        } 
+        return false;
+    }
 
     return (
         <div className="flex flex-col w-full h-screen gap-6">
@@ -318,7 +347,7 @@ export default function StatisticPage() {
                     />
                 </div>
                 <button 
-                    onClick={handlePrint}
+                    onClick={() => handlePrintExcel(Number(selectedWallet), changeValueBool(selectedDateRange))}
                     className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 >
                     Cetak
