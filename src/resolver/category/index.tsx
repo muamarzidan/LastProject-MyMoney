@@ -39,19 +39,6 @@ export const createCategory = async (name: string, walletId: number): Promise<an
     }
 };
 
-// export const updateCategory = async (id: number, name: string, walletId: number): Promise<any> => {
-//     try {
-//         const payload = {
-//             name,
-//             wallet: { id: walletId }
-//         };
-//         const response = await axiosRequest.put(`/api/wallets/categories/${id}`, payload);
-//         return response.data;
-//     } catch (error) {
-//         throw error;
-//     }
-// };
-
 export const deleteCategory = async (id: number, walletId: number): Promise<any> => {
     try {
         const response = await axiosRequest.delete(`/api/wallets/categories/${id}`, {

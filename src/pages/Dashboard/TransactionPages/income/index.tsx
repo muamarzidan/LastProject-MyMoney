@@ -31,6 +31,7 @@ export default function TransactionIncomePage() {
     const [data, setData] = useState<any[]>([]);
     const [walletList, setWalletList] = useState<any[]>([]);
     const [selectedWalletId, setSelectedWalletId] = useState<number | null>(null);
+    const [debouncedSearch, setDebouncedSearch] = useState(search);
 
     useEffect(() => {
         (async () => {
@@ -56,7 +57,6 @@ export default function TransactionIncomePage() {
         }
     };
 
-    const [debouncedSearch, setDebouncedSearch] = useState(search);
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedSearch(search);

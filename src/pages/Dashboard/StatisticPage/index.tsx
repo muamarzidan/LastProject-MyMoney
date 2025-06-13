@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import * as echarts from 'echarts';
 import axios from "axios";
+import { IoMdArrowRoundDown } from "react-icons/io";
 
 import { getWallet } from "../../../resolver/wallet/index";
 import axiosRequest from "../../../utils/request";
@@ -112,6 +113,20 @@ export default function StatisticPage() {
     const pieChartRef = useRef<HTMLDivElement>(null);
     const barChartRef = useRef<HTMLDivElement>(null);
 
+    const formatRupiahFilter = (value: number) => {
+        const newValue = Number(value);
+
+        if (newValue >= 1_000_000_000) {
+        return (newValue / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'b';
+        } else if (newValue >= 1_000_000) {
+        return (newValue / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'm';
+        } else if (newValue >= 1_000) {
+        return (newValue / 1_000).toFixed(1).replace(/\.0$/, '') + 'k';
+        } else {
+        return newValue.toString();
+        }
+    };
+
     useEffect(() => {
         const fetchWallets = async () => {
             try {
@@ -176,6 +191,14 @@ export default function StatisticPage() {
         }
     };
 
+    const formatCurrency = (amount: number) => {
+        return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0
+        }).format(amount);
+    };
+
     useEffect(() => {
         if (statisticsData && pieChartRef.current) {
             const chartInstance = echarts.init(pieChartRef.current);
@@ -190,37 +213,26 @@ export default function StatisticPage() {
                     trigger: 'item',
                     formatter: '{a} <br/>{b}: {c} ({d}%)'
                 },
-                legend: {
-                    orient: 'vertical',
-                    left: 'right',
-                    top: 'center',
-                    textStyle: {
-                        fontSize: 12
-                    }
-                },
                 series: [
                     {
                         name: 'Kategori',
                         type: 'pie',
                         radius: ['40%', '70%'],
-                        center: ['40%', '50%'],
                         avoidLabelOverlap: false,
-                        label: {
-                            show: false,
-                            position: 'center'
-                        },
                         emphasis: {
-                            label: {
-                                show: true,
-                                fontSize: '18',
-                                fontWeight: 'bold'
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
                             }
                         },
-                        labelLine: {
-                            show: false
+                        itemStyle: {
+                            borderRadius: 5,
+                            borderColor: '#fff',
+                            borderWidth: 2
                         },
                         data: pieData,
-                        color: ['#5B8FF9', '#5AD8A6', '#5D7092', '#F6BD16', '#E86452']
+                        color: ['#06B6D4', '#0C0707', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899']
                     }
                 ]
             };
@@ -255,13 +267,18 @@ export default function StatisticPage() {
                 },
                 xAxis: {
                     type: 'category',
-                    data: ['Outcome', 'Income'],
+                    data: ['Income', 'Outcome'],
                     axisTick: {
                         alignWithLabel: true
                     }
                 },
                 yAxis: {
-                    type: 'value'
+                    type: 'value',
+                    axisLabel: {
+                    formatter: function (value: number) {
+                            return formatRupiahFilter(value);
+                        }
+                    }
                 },
                 series: [
                     {
@@ -271,11 +288,11 @@ export default function StatisticPage() {
                         data: [
                             {
                                 value: outcomeData?.amount || 0,
-                                itemStyle: { color: '#5B8FF9' }
+                                itemStyle: { color: '#465fff' }
                             },
                             {
                                 value: incomeData?.amount || 0,
-                                itemStyle: { color: '#E86452' }
+                                itemStyle: { color: '#EF4444' }
                             }
                         ]
                     }
@@ -336,29 +353,30 @@ export default function StatisticPage() {
         <div className="flex flex-col w-full h-screen gap-6">
             <h1 className="text-3xl font-bold text-gray-800">Statistik</h1>
             
-            <div className="w-full flex justify-between items-center">
-                <div className="flex gap-4">
+            <div className="w-full flex flex-col sm:flex-row justify-between items-center">
+                <div className="flex w-full flex-col sm:flex-row gap-4">
                     <Select
-                        className="w-48"
+                        className="w-full sm:w-48"
                         options={walletOptions}
                         placeholder="---- Pilih Wallet ----"
                         value={selectedWallet}
                         onChange={setSelectedWallet}
                     />
                     <Select
-                        className="w-48"
+                        className="w-full sm:w-48"
                         options={dateRangeOptions}
                         placeholder="---- Pilih Rentang Waktu ----"
                         value={selectedDateRange}
                         onChange={setSelectedDateRange}
                     />
                 </div>
-                <button 
+                <div 
                     onClick={() => handlePrintExcel(Number(selectedWallet), changeValueBool(selectedDateRange))}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-800 transition-colors flex gap-1 items-center cursor-pointer w-full sm:w-fit mt-5 sm:mt-0"
                 >
-                    Cetak
-                </button>
+                    <p>Cetak</p>
+                    <IoMdArrowRoundDown className="text-xl text-white" />   
+                </div>
             </div>
 
             {loading ? (
@@ -367,38 +385,36 @@ export default function StatisticPage() {
                 </div>
             ) : (
                 <>
-                    {/* Summary Cards */}
-                    <div className="flex justify-between w-full gap-6">
+                    <div className="flex flex-wrap justify-between w-full gap-6">
                         <div className="flex-1 p-6 bg-white rounded-xl shadow-lg">
                             <h2 className="text-lg font-semibold text-gray-700 mb-2">Total Transaksi</h2>
-                            <p className="text-2xl font-bold text-gray-900">
+                            <p className="text-md sm:text-lg lg:text-2xl font-bold text-gray-900">
                                 {statisticsData ? formatCurrency(statisticsData.totalTransaction) : formatCurrency(0)}
                             </p>
                         </div>
 
                         <div className="flex-1 p-6 bg-white rounded-xl shadow-lg">
                             <h2 className="text-lg font-semibold text-gray-700 mb-2">Total Income</h2>
-                            <p className="text-2xl font-bold text-green-600">
+                            <p className="text-md sm:text-lg lg:text-2xl font-bold text-green-600">
                                 {statisticsData ? formatCurrency(statisticsData.totalIncome) : formatCurrency(0)}
                             </p>
                         </div>
 
                         <div className="flex-1 p-6 bg-white rounded-xl shadow-lg">
                             <h2 className="text-lg font-semibold text-gray-700 mb-2">Total Outcome</h2>
-                            <p className="text-2xl font-bold text-red-600">
+                            <p className="text-md sm:text-lg lg:text-2xl font-bold text-red-600">
                                 {statisticsData ? formatCurrency(statisticsData.totalOutcome) : formatCurrency(0)}
                             </p>
                         </div>
                     </div>
 
-                    {/* Charts */}
-                    <div className="w-full flex justify-between gap-6">
-                        <div className="flex-1 p-6 bg-white rounded-xl shadow-lg">
+                    <div className="grid grid-cols-12 gap-6">
+                        <div className="col-span-12 md:col-span-6 p-6 bg-white rounded-xl shadow-lg">
                             <h2 className="text-lg font-semibold text-gray-700 mb-4">Statistik Kategori</h2>
                             <div ref={pieChartRef} style={{ width: '100%', height: '300px' }}></div>
                         </div>
 
-                        <div className="flex-1 p-6 bg-white rounded-xl shadow-lg">
+                        <div className="col-span-12 md:col-span-6 p-6 bg-white rounded-xl shadow-lg">
                             <h2 className="text-lg font-semibold text-gray-700 mb-4">Statistik Tipe Transaksi</h2>
                             <div ref={barChartRef} style={{ width: '100%', height: '300px' }}></div>
                         </div>

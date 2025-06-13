@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { getUserData } from "../../resolver/user/index";
 import { getWallet, deleteWallet } from "../../resolver/wallet";
 import axiosRequest from "../../utils/request"
 import PageMeta from "../../components/common/PageMeta";
 import Select from "../../components/form/Select";
-import { FaWallet, FaEllipsisVertical  } from "react-icons/fa6";
+import { FaWallet, FaEllipsisVertical, FaPlus } from "react-icons/fa6";
 
 
 declare global {
@@ -48,7 +48,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>("");
 
 
-  
+
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js';
@@ -117,25 +117,25 @@ export default function Home() {
         const newValue = Number(value);
 
         if (newValue >= 1_000_000_000) {
-            return (newValue / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'b';
+          return (newValue / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'b';
         } else if (newValue >= 1_000_000) {
-            return (newValue / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'm';
+          return (newValue / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'm';
         } else if (newValue >= 1_000) {
-            return (newValue / 1_000).toFixed(1).replace(/\.0$/, '') + 'k';
+          return (newValue / 1_000).toFixed(1).replace(/\.0$/, '') + 'k';
         } else {
-            return newValue.toString();
+          return newValue.toString();
         }
-    }
+      }
 
       const option = {
-        title: {
-          text: 'Tipe Transaksi',
-          left: 'center',
-          textStyle: {
-            fontSize: 16,
-            fontWeight: 'bold'
-          }
-        },
+        // title: {
+        //   // text: 'Tipe Transaksi',
+        //   left: 'center',
+        //   textStyle: {
+        //     fontSize: 16,
+        //     fontWeight: 'bold'
+        //   }
+        // },
         tooltip: {
           trigger: 'axis',
           formatter: function (params: any) {
@@ -174,7 +174,7 @@ export default function Home() {
           left: "10%",
           right: '10%',
           bottom: '10%',
-          top: '20%'
+          top: '5%'
         }
       };
 
@@ -196,14 +196,14 @@ export default function Home() {
       }));
 
       const option = {
-        title: {
-          text: 'Transaksi per Kategori',
-          left: 'center',
-          textStyle: {
-            fontSize: 16,
-            fontWeight: 'bold'
-          }
-        },
+        // title: {
+        //   // text: 'Transaksi per Kategori',
+        //   left: 'center',
+        //   textStyle: {
+        //     fontSize: 16,
+        //     fontWeight: 'bold'
+        //   }
+        // },
         tooltip: {
           trigger: 'item',
           formatter: '{a} <br/>{b}: {c} ({d}%)'
@@ -213,7 +213,7 @@ export default function Home() {
             name: 'Kategori',
             type: 'pie',
             radius: ['40%', '70%'],
-            center: ['50%', '60%'],
+            avoidLabelOverlap: false,
             data: categoryData,
             emphasis: {
               itemStyle: {
@@ -293,7 +293,7 @@ export default function Home() {
     '#78350F',
   ];
 
-  const getRandomCalmColor = (index :any) => {
+  const getRandomCalmColor = (index: any) => {
     return calmDarkColors[index];
   };
 
@@ -303,8 +303,8 @@ export default function Home() {
         title="MyMoney - Home"
         description="My Money is a dashboard personal finance management application that helps you track your income and expenses, set budgets, and manage your finances effectively."
       />
-      <div className="grid grid-cols-12 gap-4 md:gap-6">
-        <div className="w-full col-span-12 h-[200px] bg-[url('/images/bg_wallet.svg')] bg-cover bg-center rounded-lg shadow-md flex flex-col justify-between p-5">
+      <div className="grid grid-cols-12 gap-2">
+        <div className="w-full col-span-12 h-[190px] bg-[url('/images/bg_wallet.svg')] bg-cover bg-center rounded-xl shadow-md flex flex-col justify-between p-5">
           <h1 className="text-white text-xl sm:text-2xl">Halo, selamat pagi {user?.data?.username}</h1>
           <div className="flex gap-2 items-center">
             <Select
@@ -321,88 +321,94 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="col-span-12 md:col-span-6">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-5 h-[400px]">
+        <div className="col-span-12 md:col-span-6 mt-2 sm:mt-4">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-5 h-[360px]">
             <div ref={incomeOutcomeChartRef} className="w-full h-full"></div>
           </div>
         </div>
 
-        <div className="col-span-12 md:col-span-6">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-5 h-[400px]">
+        <div className="col-span-12 md:col-span-6 mt-2 sm:mt-4">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-5 h-[360px]">
             <div ref={categoryChartRef} className="w-full h-full"></div>
           </div>
         </div>
 
-        <div className="col-span-12">
-          <h2 className="text-2xl font-bold mb-2">Available Wallet</h2>
+        <div className="col-span-12 mt-4">
+          <h2 className="text-2xl font-bold">Available Wallet</h2>
         </div>
-
         {
           walletData?.data?.length > 0 ? (
             walletData.data.map((wallet: any, index: any) => {
               const bgWaletColor = getRandomCalmColor(index);
               return (
-                <div key={wallet.id} className="col-span-12 md:col-span-6 h-[350px] rounded-lg" style={{ backgroundColor: bgWaletColor }}>
-                  <div className="p-4 flex flex-col items-center justify-between h-full text-white">
-                    <div className="flex justify-between w-full h-fit">
-                      <div className="flex w-fit gap-2">
-                        <FaWallet className="text-2xl" />
-                        <strong>{wallet.name}</strong>
+                <>
+                  <div key={wallet.id} className="col-span-12 md:col-span-6 h-[200px] rounded-xl" style={{ backgroundColor: bgWaletColor }}>
+                    <div className="p-4 flex flex-col items-center justify-between h-full text-white">
+                      <div className="flex justify-between w-full h-fit">
+                        <div className="flex w-fit gap-2">
+                          <FaWallet className="text-2xl" />
+                          <strong>{wallet.name}</strong>
+                        </div>
+                        <div className="relative popover-container">
+                          <FaEllipsisVertical
+                            className="text-2xl cursor-pointer"
+                            onClick={() =>
+                              setActivePopoverId(activePopoverId === wallet.id ? null : wallet.id)
+                            }
+                          />
+                          {activePopoverId === wallet.id && (
+                            <div className="absolute right-0 mt-2 w-32 bg-white text-black rounded shadow-lg z-10">
+                              <button
+                                className="w-full px-4 py-2 text-left hover:bg-blue-100 rounded"
+                                onClick={() => {
+                                  navigate(`/wallet/edit/${wallet.id}`);
+                                }}
+                              >
+                                Update
+                              </button>
+                              <button
+                                className="w-full px-4 py-2 text-left hover:bg-red-100 text-red-600 rounded"
+                                onClick={async () => {
+                                  const confirmDelete = window.confirm(`Apakah Anda yakin ingin menghapus wallet ${wallet.name} ?`);
+                                  if (confirmDelete) {
+                                    await deleteWallet(wallet.id);
+                                    alert("Wallet berhasil dihapus.");
+                                    navigate("/", { replace: true });
+                                    window.location.reload();
+                                  }
+                                }}
+                              >
+                                Hapus
+                              </button>
+                            </div>
+                          )}
+                        </div>
                       </div>
-                      <div className="relative popover-container">
-                        <FaEllipsisVertical
-                          className="text-2xl cursor-pointer"
-                          onClick={() =>
-                            setActivePopoverId(activePopoverId === wallet.id ? null : wallet.id)
-                          }
-                        />
-                        {activePopoverId === wallet.id && (
-                          <div className="absolute right-0 mt-2 w-32 bg-white text-black rounded shadow-lg z-10">
-                            <button
-                              className="w-full px-4 py-2 text-left hover:bg-blue-100 rounded"
-                              onClick={() => {
-                                navigate(`/wallet/edit/${wallet.id}`);
-                              }}
-                            >
-                              Update
-                            </button>
-                            <button
-                              className="w-full px-4 py-2 text-left hover:bg-red-100 text-red-600 rounded"
-                              onClick={async () => {
-                                const confirmDelete = window.confirm(`Apakah Anda yakin ingin menghapus wallet ${wallet.name} ?`);
-                                if (confirmDelete) {
-                                  await deleteWallet(wallet.id);
-                                  alert("Wallet berhasil dihapus.");
-                                  navigate("/", { replace: true });
-                                  window.location.reload();
-                                }
-                              }}
-                            >
-                              Hapus
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="w-full flex justify-between">
-                      <div className="flex flex-col gap-2">
-                        <p>Saldo Sekarang</p>
-                        <strong>{formatCurrency(wallet.myMoney)}</strong>
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <p>Saldo Awal</p>
-                        <strong>{formatCurrency(wallet.balance)}</strong>
+                      <div className="w-full flex justify-between">
+                        <div className="flex flex-col gap-2">
+                          <p>Saldo Sekarang</p>
+                          <strong>{formatCurrency(wallet.myMoney)}</strong>
+                        </div>
+                        <div className="flex flex-col gap-2">
+                          <p>Saldo Awal</p>
+                          <strong>{formatCurrency(wallet.balance)}</strong>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                </>
               )
             })
           ) : (
             <p className="text-gray-500">Tidak ada wallet yang tersedia.</p>
           )
         }
+        <div className="col-span-12 h-[200px] rounded-xl border-dashed border-1 border-black">
+          <Link to="/wallet/create" className="flex justify-center items-center h-full p-4">
+            <FaPlus />
+          </Link>
         </div>
+      </div>
     </>
   );
 };

@@ -78,10 +78,10 @@ export default function SignInForm() {
     <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto gap-5 sm:gap-10">
         <div>
           <h1 className="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
-            Sign In
+            Login
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Enter your username and password to sign in!
+            Masukan username dan password Anda untuk masuk ke akun Anda.
           </p>
         </div>
         <div>
@@ -125,14 +125,6 @@ export default function SignInForm() {
                     {formErrors.password && (
                       <p className="mt-1.5 text-xs text-error-500">{formErrors.password}</p>
                     )}
-                  </div>
-                  <div className="flex items-center justify-end">
-                    <Link
-                      to="/reset-password"
-                      className="text-sm text-brand-500 hover:text-brand-600 dark:text-brand-400"
-                    >
-                      Forgot password?
-                    </Link>
                   </div>
                 </div>
               </div>

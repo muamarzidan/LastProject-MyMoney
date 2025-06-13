@@ -70,32 +70,6 @@ export const logout = async () => {
     }
 };
 
-export const resetPasswordSendOTP = async (username: string) => {
-    try {
-        const response = await axiosRequest.post("/api/auth/reset-password/send-otp", { username });
-        if (response.status === 200) {
-            return response.data;
-        } else {
-            throw new Error("Failed to send OTP");
-        }
-    } catch (error) {
-        throw error;
-    }
-};
-
-export const resetPasswordVerifyOTP = async (username: string, otp: string) => {
-    try {
-        const response = await axiosRequest.post("/api/auth/reset-password/verify-otp", { username, otp });
-        if (response.status === 200) {
-            return response.data;
-        } else {
-            throw new Error("Failed to verify OTP");
-        }
-    } catch (error) {
-        throw error;
-    }
-};
-
 export const getToken = () => {
     return localStorage.getItem("app-token");
 };

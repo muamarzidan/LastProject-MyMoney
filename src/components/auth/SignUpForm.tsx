@@ -66,13 +66,14 @@ export default function SignUpForm() {
   };
 
   return (
-    <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto gap-5 sm:gap-10">
+    <div className=" flex flex-1">
+      <div className="flex flex-col justify-center w-full max-w-md mx-auto gap-5 sm:gap-10">
         <div>
           <h1 className="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
-            Sign Up
+            Registrasi
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Enter your name, username, and password to sign up!
+            Masukan data diri Anda untuk membuat akun baru.
           </p>
         </div>
         <div>
@@ -151,6 +152,7 @@ export default function SignUpForm() {
             </div>
           </form>
         </div>
+      </div>
     </div>
   );
 };
