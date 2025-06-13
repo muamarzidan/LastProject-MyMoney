@@ -133,7 +133,7 @@ export default function SignInForm() {
                   {isLoading ? "Signing in..." : "Sign in"}
                 </Button>
                 <div className="flex justify-center">
-                  <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
+                  <p className="text-sm font-normal text-center text-gray-700 sm:text-white 2xl:text-gray-700 dark:text-gray-400 sm:text-start">
                     Don&apos;t have an account? {""}
                     <Link
                       to="/signup"

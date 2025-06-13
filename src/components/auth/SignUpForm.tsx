@@ -81,10 +81,11 @@ export default function SignUpForm() {
             <div className="flex flex-col gap-5 sm:gap-12">
               <div className="space-y-6">
                 <div>
-                  <Label htmlFor="name">
+                  <Label htmlFor="name" className="text-white sm:text-gray-700">
                     Name <span className="text-error-500">*</span>{" "}
                   </Label>
                   <Input 
+                    className="bg-white"
                     placeholder="Enter your name" 
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -94,10 +95,11 @@ export default function SignUpForm() {
                   )}
                 </div>
                 <div>
-                  <Label htmlFor="username">
+                  <Label htmlFor="username" className="text-white sm:text-gray-700">
                     Username <span className="text-error-500">*</span>{" "}
                   </Label>
                   <Input 
+                    className="bg-white"
                     placeholder="Enter your username" 
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
@@ -107,11 +109,12 @@ export default function SignUpForm() {
                   )}
                 </div>
                 <div>
-                  <Label htmlFor="password">
+                  <Label htmlFor="password" className="text-white sm:text-gray-700">
                     Password <span className="text-error-500">*</span>{" "}
                   </Label>
                   <div className="relative">
                     <Input
+                      className="bg-white"
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter your password"
                       value={password}
@@ -138,7 +141,7 @@ export default function SignUpForm() {
                   {isLoading ? "Signing up..." : "Sign Up"}
                 </Button>
                 <div className="flex justify-center">
-                  <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
+                  <p className="text-sm font-normal text-center text-white 2xl:text-gray-700 sm:text-start">
                     Already have an account?{" "}
                     <Link
                       to="/signin"
