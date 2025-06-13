@@ -244,8 +244,8 @@ export default function CreateTransactionIncomePage() {
                 id="date"
                 label="Tanggal"
                 placeholder="Pilih tanggal"
-                onChange={(_, currentDateString) => {
-                  setDate(currentDateString);
+                onChange={(dateStr: string) => {
+                  setDate(dateStr);
                   clearError('date');
                 }}
               />

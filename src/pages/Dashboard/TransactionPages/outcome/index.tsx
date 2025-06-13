@@ -66,7 +66,7 @@ export default function TransactionOutcomePage() {
             clearTimeout(handler);
         };
     }, [search]);
-    
+
     return (
         <div className="flex flex-col justify-start w-full h-screen gap-6">
             <div id="header-transaction-outcome" className="flex flex-col gap-3">

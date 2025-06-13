@@ -145,6 +145,7 @@ export default function CreateTransactionOutcomePage () {
         destination,
         date,
       };
+      console.log("Payload untuk transaksi:", payload);
       await createExpense(payload);
       navigate("/transaction-outcome");
     } catch (err) {
@@ -256,11 +257,11 @@ export default function CreateTransactionOutcomePage () {
                 id="date"
                 label="Tanggal"
                 placeholder="Pilih tanggal"
-                onChange={(_, currentDateString) => {
-                  setDate(currentDateString);
+                onChange={(dateStr: string) => {
+                  setDate(dateStr);
                   clearError('date');
                 }}
-              />
+            />
               {errors.date && (
                 <p className="text-red-500 text-sm mt-1">{errors.date}</p>
               )}

@@ -309,15 +309,16 @@ export default function StatisticPage() {
 
     const getToken = localStorage.getItem("app-token");
     const handlePrintExcel = async (walletId: number, isYear: boolean) => {
+        console.log("Mencetak Excel untuk walletId:", walletId, "isYear:", isYear);
         try {
             const response = await axios.get(
             `${API_URL}/api/wallets/export-excel/${walletId}?isYear=${isYear}`,
-            {
-                responseType: 'blob',
-                headers: {
-                    Authorization: `Bearer ${getToken}`,
-                },
-            }
+                {
+                    responseType: 'blob',
+                    headers: {
+                        Authorization: `Bearer ${getToken}`,
+                    },
+                }
             );
 
             const url = window.URL.createObjectURL(new Blob([response.data]));
