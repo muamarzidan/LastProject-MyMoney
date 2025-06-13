@@ -109,7 +109,7 @@ export default function CreateTransactionOutcomePage () {
     }
 
     if (!destination.trim()) {
-      newErr.destination = "Destinasi transaksi tidak boleh kosong";
+      newErr.destination = "Tujuan transaksi tidak boleh kosong";
     }
 
     if (!date) {
@@ -221,7 +221,7 @@ export default function CreateTransactionOutcomePage () {
               name="destination"
               type="text"
               value={destination}
-              placeholder="Masukkan Destinasi Transaksi"
+              placeholder="Masukkan Tujuan Transaksi"
               onChange={(e) => {
                 setDestination(e.target.value);
                 clearError('destination');

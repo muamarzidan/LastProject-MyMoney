@@ -59,7 +59,7 @@ const formatCurrency = (amount: number) => {
 const columns: TableColumn[] = [
     {
         key: "source",
-        header: "Sumber/Destinasi",
+        header: "Sumber/Tujuan",
         render: (row) => {
             if (row.transactionType === 'INCOME') {
                 return row.source || '-';

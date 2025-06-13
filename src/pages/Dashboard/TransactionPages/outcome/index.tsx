@@ -12,7 +12,7 @@ import Select from "../../../../components/form/Select";
 
 
 const columns: TableColumn[] = [
-    { key: "destination", header: "Destinasi" },
+    { key: "destination", header: "Tujuan" },
     { key: "category", header: "Kategori" },
     {
         key: "amount",
@@ -87,7 +87,7 @@ export default function TransactionOutcomePage() {
                             id="search"
                             type="text"
                             name="search"
-                            placeholder="Cari berdasarkan destinasi..."
+                            placeholder="Cari berdasarkan tujuan..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             className="w-1/2"
