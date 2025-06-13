@@ -47,14 +47,3 @@ export const deleteWallet = async (id: number): Promise<any> => {
         throw error;
     }
 };
-
-export const statisticTransactiionWallet = async (walletId: number, filterIsYearly: boolean): Promise<any> => {
-    try {
-        const response = await axiosRequest.get("/api/wallets/statistic", {
-            params: { walletId, filterIsYearly }
-        });
-        return response.data;
-    } catch (error) {
-        throw error;
-    }
-};

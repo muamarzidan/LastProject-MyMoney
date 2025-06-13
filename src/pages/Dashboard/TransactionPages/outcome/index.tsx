@@ -12,7 +12,7 @@ import Select from "../../../../components/form/Select";
 
 
 const columns: TableColumn[] = [
-    { key: "destination", header: "Destinasi" },
+    { key: "destination", header: "Tujuan" },
     { key: "category", header: "Kategori" },
     {
         key: "amount",
@@ -31,6 +31,7 @@ export default function TransactionOutcomePage() {
     const [data, setData] = useState<any[]>([]);
     const [walletList, setWalletList] = useState<any[]>([]);
     const [selectedWalletId, setSelectedWalletId] = useState<number | null>(null);
+    const [debouncedSearch, setDebouncedSearch] = useState(search);
 
     useEffect(() => {
         (async () => {
@@ -56,7 +57,6 @@ export default function TransactionOutcomePage() {
         }
     };
     
-    const [debouncedSearch, setDebouncedSearch] = useState(search);
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedSearch(search);
@@ -87,7 +87,7 @@ export default function TransactionOutcomePage() {
                             id="search"
                             type="text"
                             name="search"
-                            placeholder="Cari berdasarkan destinasi..."
+                            placeholder="Cari berdasarkan tujuan..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             className="w-1/2"
