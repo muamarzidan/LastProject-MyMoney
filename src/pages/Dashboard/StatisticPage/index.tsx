@@ -287,11 +287,11 @@ export default function StatisticPage() {
                         barWidth: '60%',
                         data: [
                             {
-                                value: outcomeData?.amount || 0,
+                                value: incomeData?.amount || 0,
                                 itemStyle: { color: '#465fff' }
                             },
                             {
-                                value: incomeData?.amount || 0,
+                                value: outcomeData?.amount || 0,
                                 itemStyle: { color: '#EF4444' }
                             }
                         ]
