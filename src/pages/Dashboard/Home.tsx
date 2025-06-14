@@ -321,20 +321,29 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="col-span-12 md:col-span-6 mt-2 sm:mt-4">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-5 h-[360px]">
-            <div ref={incomeOutcomeChartRef} className="w-full h-full"></div>
-          </div>
-        </div>
+        {
+          walletData?.data?.length == 0 ? (
+            <div></div>
+          ) : (
+            <>
+            <div className="col-span-12 md:col-span-6 mt-2 sm:mt-4">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-5 h-[360px]">
+                <div ref={incomeOutcomeChartRef} className="w-full h-full"></div>
+              </div>
+            </div>
 
-        <div className="col-span-12 md:col-span-6 mt-2 sm:mt-4">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-5 h-[360px]">
-            <div ref={categoryChartRef} className="w-full h-full"></div>
-          </div>
-        </div>
+            <div className="col-span-12 md:col-span-6 mt-2 sm:mt-4">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-5 h-[360px]">
+                <div ref={categoryChartRef} className="w-full h-full"></div>
+              </div>
+            </div>
+            </>
+          )
+        }
+
 
         <div className="col-span-12 mt-4">
-          <h2 className="text-2xl font-bold">Available Wallet</h2>
+          <h2 className="text-2xl font-bold">Wallet Tersedia</h2>
         </div>
         {
           walletData?.data?.length > 0 ? (
@@ -400,12 +409,14 @@ export default function Home() {
               )
             })
           ) : (
-            <p className="text-gray-500">Tidak ada wallet yang tersedia.</p>
+            <div className="col-span-12">
+              <p className="text-gray-500">Tidak ada wallet yang tersedia.</p>
+            </div>
           )
         }
-        <div className="col-span-12 h-[200px] rounded-xl border-dashed border-1 border-black">
-          <Link to="/wallet/create" className="flex justify-center items-center h-full p-4">
-            <FaPlus />
+        <div className="col-span-12 h-[200px] rounded-xl border-dashed border-1 border-black hover:bg-blue-100 bg-transparent">
+          <Link to="/wallet/create" className="flex justify-center items-center h-full p-4 gap-2">
+            Tambah wallet  <FaPlus />
           </Link>
         </div>
       </div>
